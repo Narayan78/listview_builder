@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, avoid_unnecessary_containers, deprecated_member_use
+// ignore_for_file: camel_case_types, prefer_const_constructors, avoid_unnecessary_containers, deprecated_member_use, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 
@@ -54,7 +54,10 @@ class _listviewState extends State<listview> {
           actions: [
             IconButton(
                 onPressed: () {
-                  
+                  setState(() {
+                   personName.clear();
+                   personNumber.clear();                
+                  });
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -67,7 +70,7 @@ class _listviewState extends State<listview> {
                                 top: 0.0,
                                 child: InkResponse(
                                   onTap: () {
-                                     print(namelist);
+                                    print(namelist);
                                     Navigator.of(context).pop();
                                   },
                                   child: Icon(
@@ -161,30 +164,77 @@ class _listviewState extends State<listview> {
                       child: Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: ListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          tileColor: Color.fromARGB(235, 227, 222, 222),
-                          title: Text(
-                            namelist[index],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 22),
-                          ),
-                          subtitle: Text(
-                            phonelist[index],
-                            style: TextStyle(fontSize: 17),
-                          ),
-                          trailing: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (count > 0) {
-                                    count = count - 1;
-                                    namelist.removeAt(index);
-                                  phonelist.removeAt(index);
-                                  }
-                                });
-                              },
-                              icon: const Icon(Icons.delete)),
-                        ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            tileColor: Color.fromARGB(235, 227, 222, 222),
+                            title: Text(
+                              namelist[index],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 20),
+                            ),
+                            subtitle: Text(
+                              phonelist[index],
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: Color.fromARGB(157, 70, 70, 70),
+                              radius: 30,
+                              child: Text(
+                                namelist[index][0],
+                                style: TextStyle(fontSize: 23),
+                              ),
+                            ),
+                            trailing: Container(
+                              width: 144,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {}, icon: Icon(Icons.call)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.message)),
+                                  PopupMenuButton(
+                                      itemBuilder: ((context) => [
+                                            PopupMenuItem(
+                                              // ignore: sort_child_properties_last
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.delete),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text('Delete')
+                                                ],
+                                              ),
+                                              onTap: (() {
+                                                {
+                                                  setState(() {
+                                                    if (count > 0) {
+                                                      count = count - 1;
+                                                      namelist.removeAt(index);
+                                                      phonelist.removeAt(index);
+                                                    }
+                                                  });
+                                                }
+                                              }),
+                                            ),
+                                            PopupMenuItem(
+                                              // ignore: sort_child_properties_last
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.edit),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text('Edit')
+                                                ],
+                                              ),
+                                              onTap: (() {}),
+                                            ),
+                                          ]))
+                                ],
+                              ),
+                            )),
                       ),
                     );
                   },
